@@ -1,0 +1,135 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Project Selection Tool}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\title{\textbf{Project Selection Tool}\\[0.5em]\large Setup Guide}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Step 1: Create Your Product List}
+
+\begin{enumerate}[leftmargin=*]
+    \item Go to \href{https://sheets.google.com}{sheets.google.com}
+    \item Click \textbf{Blank} to create a new spreadsheet
+    \item Name it something like ``Product Selections''
+\end{enumerate}
+
+\subsection*{Set Up Your Columns}
+
+In the first row, add these headers:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Column A} & \textbf{Column B} \\
+\midrule
+category & name \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{Add Your Products}
+
+Add one product per row. The \textbf{category} column determines which step it appears in.
+
+\textbf{Example:}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{category} & \textbf{name} \\
+\midrule
+Vanity & 36" White Shaker \\
+Vanity & 48" Gray Flat Panel \\
+Vanity & 60" Espresso \\
+Countertop & White Quartz 2cm \\
+Countertop & Gray Granite 3cm \\
+Sink & White Undermount Rectangle \\
+Sink & Biscuit Vessel Oval \\
+Faucet & Chrome Single Handle \\
+Faucet & Brushed Nickel Widespread \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The order of categories in your sheet = the order of steps in the app.
+
+\newpage
+
+\section*{Step 2: Publish Your Sheet}
+
+\begin{enumerate}[leftmargin=*]
+    \item In Google Sheets, go to \textbf{File $\rightarrow$ Share $\rightarrow$ Publish to web}
+    \item In the first dropdown, select your sheet name (or ``Entire document'')
+    \item In the second dropdown, change ``Web page'' to \textbf{``Comma-separated values (.csv)''}
+    \item Click the green \textbf{Publish} button
+    \item Click \textbf{OK} on the popup
+    \item \textbf{Copy the URL} that appears
+\end{enumerate}
+
+The URL will look something like:
+
+\begin{center}
+\texttt{https://docs.google.com/spreadsheets/d/e/2PACX.../pub?output=csv}
+\end{center}
+
+\section*{Step 3: Connect to the App}
+
+\begin{enumerate}[leftmargin=*]
+    \item Open the app: \textbf{\underline{\hspace{6cm}}} {\small (URL provided separately)}
+    \item Paste your Google Sheets URL in the box
+    \item Click \textbf{Save \& Continue}
+\end{enumerate}
+
+Done! Your products now appear in the selection wizard.
+
+\section*{Updating Products}
+
+To add, remove, or edit products:
+
+\begin{enumerate}[leftmargin=*]
+    \item Just edit your Google Sheet (add rows, change names, etc.)
+    \item Changes are automatic---users just need to refresh the page
+\end{enumerate}
+
+\textbf{No need to republish.} Edit the sheet anytime.
+
+\section*{Tips}
+
+\begin{itemize}[leftmargin=*]
+    \item Keep category names consistent (capitalization matters)
+    \item Add new categories by just typing a new category name
+    \item The app steps through categories in the order they first appear
+    \item You can add extra columns (like ``price'' or ``notes'')---they won't break anything
+\end{itemize}
+
+\vfill
+
+\begin{center}
+\rule{0.5\textwidth}{0.4pt}\\[1em]
+\textbf{Questions?} Contact: \underline{\hspace{5cm}}
+\end{center}
+
+\end{document}

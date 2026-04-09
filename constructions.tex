@@ -1,0 +1,70 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+\setlist{nosep}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large Project Selection Tool Setup}
+\end{center}
+
+\vspace{0.5em}
+
+\textbf{1. Get a Google Sheet}
+
+\textbf{Option A:} Use the sample sheet (make a copy):\\
+\url{https://docs.google.com/spreadsheets/d/128-QI735i0o33xSdy4uvlM2Z7DghWXgcZoIQx736D2A/copy}
+
+\textbf{Option B:} Create your own at sheets.google.com with these columns:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+category & name \\
+\midrule
+Vanity & 36" White Shaker \\
+Vanity & 48" Gray Flat Panel \\
+Countertop & White Quartz \\
+Countertop & Gray Granite \\
+Sink & White Undermount \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Add as many rows as you need. Each unique category becomes a step.
+
+\vspace{1em}
+
+\textbf{2. Publish the Sheet}
+
+\begin{enumerate}[leftmargin=2em]
+\item File $\rightarrow$ Share $\rightarrow$ Publish to web
+\item First dropdown: select your sheet
+\item Second dropdown: change to \textbf{Comma-separated values (.csv)}
+\item Click \textbf{Publish}
+\item Copy the URL
+\end{enumerate}
+
+\vspace{1em}
+
+\textbf{3. Open the App}
+
+\begin{enumerate}[leftmargin=2em]
+\item Go to: \textbf{project-selection-tool.vercel.app}
+\item Paste your URL
+\item Click Save \& Continue
+\end{enumerate}
+
+\vspace{1em}
+
+\textbf{To Update Products}
+
+Just edit the Google Sheet. Refresh the app to see changes.
+
+\end{document}

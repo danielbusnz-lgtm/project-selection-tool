@@ -91,8 +91,8 @@ function App() {
 
     setLoading(true)
     setError('')
-    // Use CORS proxy to fetch Google Sheets
-    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url)
+    // Use our own API to fetch Google Sheets
+    const proxyUrl = '/api/sheet?url=' + encodeURIComponent(url)
     fetch(proxyUrl)
       .then(r => {
         if (!r.ok) throw new Error('Failed to fetch')
