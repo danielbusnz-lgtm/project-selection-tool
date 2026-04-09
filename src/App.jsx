@@ -77,7 +77,8 @@ function App() {
         </table>
         <div className="flex gap-4">
           <button onClick={reset} className="px-4 py-2 border">Start Over</button>
-          <button onClick={downloadCSV} className="px-4 py-2 bg-black text-white">Download CSV</button>
+          <button onClick={downloadCSV} className="px-4 py-2 border">Download CSV</button>
+          <button onClick={() => window.print()} className="px-4 py-2 bg-black text-white">Print</button>
         </div>
       </div>
     )
