@@ -1,0 +1,45 @@
+category,parent,name
+Sink Type,,Farm Sink
+Sink Type,,Stainless Steel Sink
+Sink Type,,Undermount Sink
+Installation,Farm Sink,Under counter
+Installation,Farm Sink,Over counter
+Installation,Farm Sink,Flush with counter
+Size,Farm Sink,30"
+Size,Farm Sink,33"
+Size,Farm Sink,36"
+Color,Farm Sink,White
+Color,Farm Sink,Biscuit
+Gauge,Stainless Steel Sink,16 gauge
+Gauge,Stainless Steel Sink,18 gauge
+Bowl Config,Stainless Steel Sink,Single bowl
+Bowl Config,Stainless Steel Sink,Double bowl
+Size,Stainless Steel Sink,30"
+Size,Stainless Steel Sink,33"
+Mount Type,Undermount Sink,Standard undermount
+Mount Type,Undermount Sink,Low divide
+Shape,Undermount Sink,Rectangle
+Shape,Undermount Sink,Oval
+Vanity Type,,Standard Vanity
+Vanity Type,,Floating Vanity
+Size,Standard Vanity,30"
+Size,Standard Vanity,36"
+Size,Standard Vanity,48"
+Size,Standard Vanity,60"
+Height,Standard Vanity,Standard (32")
+Height,Standard Vanity,Comfort (36")
+Door Style,Standard Vanity,Shaker
+Door Style,Standard Vanity,Flat Panel
+Door Style,Standard Vanity,Raised Panel
+Color,Standard Vanity,White
+Color,Standard Vanity,Gray
+Color,Standard Vanity,Espresso
+Size,Floating Vanity,24"
+Size,Floating Vanity,30"
+Size,Floating Vanity,36"
+Size,Floating Vanity,48"
+Drawer Config,Floating Vanity,2 Drawers
+Drawer Config,Floating Vanity,3 Drawers
+Color,Floating Vanity,White
+Color,Floating Vanity,Walnut
+Color,Floating Vanity,Black

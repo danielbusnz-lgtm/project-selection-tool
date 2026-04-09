@@ -6,7 +6,18 @@ function parseCSV(text) {
   const lines = text.trim().split('\n')
   const headers = lines[0].split(',').map(h => h.trim().toLowerCase())
   return lines.slice(1).map(line => {
-    const values = line.split(',').map(v => v.trim())
+    // Handle quoted values with commas
+    const values = []
+    let current = ''
+    let inQuotes = false
+    for (const char of line) {
+      if (char === '"') inQuotes = !inQuotes
+      else if (char === ',' && !inQuotes) {
+        values.push(current.trim())
+        current = ''
+      } else current += char
+    }
+    values.push(current.trim())
     return headers.reduce((obj, header, i) => {
       obj[header] = values[i] || ''
       return obj
@@ -16,9 +27,7 @@ function parseCSV(text) {
 
 function App() {
   const [data, setData] = useState([])
-  const [categories, setCategories] = useState([])
-  const [step, setStep] = useState(0)
-  const [selections, setSelections] = useState({})
+  const [selections, setSelections] = useState([]) // Array of {category, name, parent}
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -31,7 +40,6 @@ function App() {
       .then(text => {
         const parsed = parseCSV(text)
         setData(parsed)
-        setCategories([...new Set(parsed.map(item => item.category))])
         setLoading(false)
       })
       .catch((e) => {
@@ -39,37 +47,54 @@ function App() {
         setLoading(false)
       })
   }, [])
+
   if (loading) return <div className="p-8">Loading...</div>
   if (error) return <div className="p-8 text-red-600">Error: {error}</div>
 
-  const currentCategory = categories[step]
-  const options = data.filter(item => item.category === currentCategory)
-  const isLastStep = step === categories.length - 1
-  const showSummary = step >= categories.length
+  // Get current parent context (last selection's name, or empty for root)
+  const currentParent = selections.length > 0 ? selections[selections.length - 1].name : ''
 
-  const select = (item) => setSelections({ ...selections, [currentCategory]: item })
-  const next = () => setStep(step + 1)
-  const back = () => setStep(step - 1)
-  const reset = () => { setStep(0); setSelections({}) }
+  // Get options for current level (items matching current parent)
+  const currentOptions = data.filter(item => item.parent === currentParent)
+
+  // Group by category
+  const categories = [...new Set(currentOptions.map(item => item.category))]
+  const currentCategory = categories[0] // Show first category at this level
+  const options = currentOptions.filter(item => item.category === currentCategory)
+
+  // Check if we're done (no more options)
+  const showSummary = currentOptions.length === 0 && selections.length > 0
+
+  const select = (item) => {
+    setSelections([...selections, item])
+  }
+
+  const back = () => {
+    setSelections(selections.slice(0, -1))
+  }
+
+  const reset = () => {
+    setSelections([])
+  }
+
+  const downloadCSV = () => {
+    const csv = "Category,Selection\n" + selections.map(s => `${s.category},"${s.name}"`).join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = 'selections.csv'
+    a.click()
+  }
 
   if (showSummary) {
-    const downloadCSV = () => {
-      const csv = "Category,Selection\n" + Object.entries(selections).map(([cat, item]) => `${cat},"${item.name}"`).join('\n')
-      const blob = new Blob([csv], { type: 'text/csv' })
-      const a = document.createElement('a')
-      a.href = URL.createObjectURL(blob)
-      a.download = 'selections.csv'
-      a.click()
-    }
-
     return (
       <div className="p-8 max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Summary</h1>
         <table className="w-full border-collapse mb-6">
           <tbody>
-            {Object.entries(selections).map(([cat, item]) => (
-              <tr key={cat} className="border-b">
-                <td className="py-2 font-medium">{cat}</td>
+            {selections.map((item, i) => (
+              <tr key={i} className="border-b">
+                <td className="py-2 font-medium">{item.category}</td>
                 <td className="py-2">{item.name}</td>
               </tr>
             ))}
@@ -86,9 +111,11 @@ function App() {
 
   return (
     <div className="p-8 max-w-2xl mx-auto">
-      <div className="mb-4 text-sm text-gray-500">
-        Step {step + 1} of {categories.length}
-      </div>
+      {selections.length > 0 && (
+        <div className="mb-4 text-sm text-gray-500">
+          Path: {selections.map(s => s.name).join(' → ')}
+        </div>
+      )}
 
       <h1 className="text-2xl font-bold mb-6">Select {currentCategory}</h1>
 
@@ -97,32 +124,16 @@ function App() {
           <button
             key={i}
             onClick={() => select(item)}
-            className={`p-4 border text-left ${
-              selections[currentCategory]?.name === item.name
-                ? 'border-black bg-gray-100'
-                : 'border-gray-300'
-            }`}
+            className="p-4 border border-gray-300 text-left hover:border-black hover:bg-gray-50"
           >
             {item.name}
           </button>
         ))}
       </div>
 
-      <div className="flex gap-4">
-        {step > 0 && (
-          <button onClick={back} className="px-4 py-2 border">Back</button>
-        )}
-        <button
-          onClick={next}
-          disabled={!selections[currentCategory]}
-          className={`px-4 py-2 ${
-            selections[currentCategory] ? 'bg-black text-white' : 'bg-gray-200 text-gray-400'
-          }`}
-        >
-          {isLastStep ? 'View Summary' : 'Next'}
-        </button>
-      </div>
-
+      {selections.length > 0 && (
+        <button onClick={back} className="px-4 py-2 border">Back</button>
+      )}
     </div>
   )
 }
