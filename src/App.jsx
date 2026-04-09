@@ -53,6 +53,15 @@ function App() {
   const reset = () => { setStep(0); setSelections({}) }
 
   if (showSummary) {
+    const downloadCSV = () => {
+      const csv = "Category,Selection\n" + Object.entries(selections).map(([cat, item]) => `${cat},"${item.name}"`).join('\n')
+      const blob = new Blob([csv], { type: 'text/csv' })
+      const a = document.createElement('a')
+      a.href = URL.createObjectURL(blob)
+      a.download = 'selections.csv'
+      a.click()
+    }
+
     return (
       <div className="p-8 max-w-2xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Summary</h1>
@@ -68,7 +77,7 @@ function App() {
         </table>
         <div className="flex gap-4">
           <button onClick={reset} className="px-4 py-2 border">Start Over</button>
-          <button onClick={() => window.print()} className="px-4 py-2 bg-black text-white">Print</button>
+          <button onClick={downloadCSV} className="px-4 py-2 bg-black text-white">Download CSV</button>
         </div>
       </div>
     )
